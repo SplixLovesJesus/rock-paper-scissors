@@ -14,15 +14,9 @@ function getComputerChoice() {
 }
 
 function getHumanChoice() {
-  let input = prompt('Pick one, Rock, Paper or Scissors:')
-  while (input === null) {
-    prompt('Pick one, Rock, Paper or Scissors:')
-    break
-  }
-  input = input.toLowerCase();
-  if (input === 'rock') {
+  if ('rock') {
     return 'rock';
-  } else if (input === 'paper') {
+  } else if ('paper') {
     return 'paper';
   } else {
     return 'scissors';
@@ -34,22 +28,74 @@ let computerScore = 0;
 
 function playRound(input, randomScore) {
   if (input === randomScore) {
-    console.log('Tie');
-    console.log(`Score: ${playerScore}, ${computerScore}`);
+    results.innerHTML = "Tie"
+    score.innerText = `Score: ${playerScore}, ${computerScore}`
   } else if (input === 'rock' && randomScore === 'scissors' || input === 'paper' && randomScore === 'rock' || input === 'scissors' && randomScore === 'paper') {
     playerScore++;
-    console.log("You Won!");
-    console.log(`Score: ${playerScore}, ${computerScore}`);
+    results.innerHTML = "You Won!"
+    score.innerText = `Score: ${playerScore}, ${computerScore}`
   } else {
     computerScore++;
-    console.log("You Lost!");
-    console.log(`Score: ${playerScore}, ${computerScore}`);
+    results.innerHTML = "You Lost"
+    score.innerText = `Score: ${playerScore}, ${computerScore}`
   }
   return input, randomScore;
 }
 
-playRound(playerSelection, computerSelection)
-
 function playGame() {
   // Play the game 5 times
+}
+
+const rock = document.querySelector("#rock");
+const paper = document.querySelector("#paper");
+const scissors = document.querySelector("#scissors");
+const score = document.querySelector("#score");
+const results = document.querySelector("#results");
+const pick = document.querySelector("#pick");
+const reset = document.querySelector("#resetGame");
+const scoreEnd = document.querySelector("#header2");
+
+rock.addEventListener("click", () => {
+  let playerSelection = "rock"
+  let computerSelection = getComputerChoice();
+  pick.innerText = `You picked ${playerSelection}, Computer Picked ${computerSelection}`;
+  playRound(playerSelection, computerSelection)
+  displayEnd();
+})
+
+paper.addEventListener("click", () => {
+  let playerSelection = "paper"
+  let computerSelection = getComputerChoice();
+  pick.innerText = `You picked ${playerSelection}, Computer Picked ${computerSelection}`;
+  playRound(playerSelection, computerSelection)
+  displayEnd();
+})
+
+scissors.addEventListener("click", () => {
+  let playerSelection = "scissors"
+  let computerSelection = getComputerChoice();
+  pick.innerText = `You picked ${playerSelection}, Computer Picked ${computerSelection}`;
+  playRound(playerSelection, computerSelection)
+  displayEnd();
+})
+
+function resetGame() {
+  playerScore = 0;
+  computerScore = 0;
+  score.innerText = `Score: ${playerScore}, ${computerScore}`
+  scoreEnd.innerText = "";
+  pick.innerText = "";
+  results.innerText = "";
+}
+
+reset.addEventListener("click", () => {
+  resetGame();
+})
+
+function displayEnd() {
+  if (playerScore === 5) {
+    scoreEnd.innerText = "You Won 5 rounds, Congrats!"
+  } else if (computerScore === 5) {
+    scoreEnd.innerText = "The computer Won 5 rounds."
+  }
 }
